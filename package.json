@@ -1,6 +1,6 @@
 {
   "name": "little-popo",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "will be retired when popo reaches v0.1",
   "main": "scripts/js/lib/little-popo.js",
   "dependencies": {
