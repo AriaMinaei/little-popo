@@ -16,6 +16,12 @@ module.exports = class TestRunner
 
 		didBeep = no
 
+		@_reporter = require './simpleErrorReporter'
+
+	setErrorReporter: (reporter) ->
+
+		@_reporter = reporter
+
 	checkDone: ->
 
 		return if @pending > 0 or @done
@@ -68,10 +74,6 @@ module.exports = class TestRunner
 
 		@checkDone()
 
-	processErrorMessage: (msg) ->
-
-		"       " + msg
-
 	handleError: (id, name, err) ->
 
 		@report[id].success = no
@@ -81,28 +83,9 @@ module.exports = class TestRunner
 
 	renderFailure: (id, item) ->
 
-		err = item.error
-
 		console.log '       ' + color(item.name, 'red') + '\n'
 
-		if err.actual?
-
-			console.log '       Expected:'
-
-			console.log '       "' + color(err.expected, 'yellow') + '"\n'
-
-			console.log '       Actual:'
-			console.log '       "' + color(err.actual, 'yellow') + '"\n'
-
-		console.log '       Stack:'
-
-		console.log color(@processErrorMessage(err.stack), 'yellow')
-
-		unless @didBeep
-
-			`console.log("\007")`
-
-			@didBeep = yes
+		@_reporter item.error
 
 	describe: (name) ->
 
