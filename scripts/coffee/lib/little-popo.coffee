@@ -31,7 +31,7 @@ process.on 'exit', ->
 
 	console.log "\n\n"
 
-PrettyError = require 'pretty-error'
+
 
 module.exports = (p, usePrettyError = yes) ->
 
@@ -39,10 +39,12 @@ module.exports = (p, usePrettyError = yes) ->
 
 	if usePrettyError
 
+		PrettyError = require 'pretty-error'
+
 		errorReporter = new PrettyError
 
 		errorReporter.appendStyle 'pretty-error': marginLeft: 7
 
-		tests.setErrorReporter (e) ->
+		tests.setErrorReporter (error) ->
 
-			errorReporter.render(e, yes)
+			errorReporter.render(error, yes)
