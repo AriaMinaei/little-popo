@@ -18,9 +18,3 @@ module.exports = reportError = (err) ->
 	console.log '       Stack:'
 
 	console.log color(processErrorMessage(err.stack), 'yellow')
-
-	unless @didBeep
-
-		`console.log("\007")`
-
-		@didBeep = yes

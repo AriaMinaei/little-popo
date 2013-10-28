@@ -87,6 +87,12 @@ module.exports = class TestRunner
 
 		@_reporter item.error
 
+		unless @didBeep
+
+			`console.log("\007")`
+
+			@didBeep = yes
+
 	describe: (name) ->
 
 		@report.push type: 'description', name: name
