@@ -9,8 +9,6 @@ global.mod = (p) ->
 
 	require path.resolve pathToLib, p
 
-require 'when/monitor/console'
-
 TestRunner = require './TestRunner'
 
 tests = new TestRunner
@@ -31,13 +29,27 @@ process.on 'exit', ->
 
 	console.log "\n\n"
 
+monitor = require 'when-monitor'
 
+unhandledRejectionRenderer = (rejection) ->
+
+	console.log rejection
+
+monitor 1, (rejections) ->
+
+	for r in rejections
+
+		unhandledRejectionRenderer r
+
+	return
 
 module.exports = (p, usePrettyError = yes) ->
 
 	pathToLib = p
 
 	if usePrettyError
+
+		# require 'when/monitor/console'
 
 		PrettyError = require 'pretty-error'
 
@@ -48,3 +60,7 @@ module.exports = (p, usePrettyError = yes) ->
 		tests.setErrorReporter (error) ->
 
 			errorReporter.render(error, yes)
+
+		unhandledRejectionRenderer = (rejection) ->
+
+			errorReporter.render rejection, yes

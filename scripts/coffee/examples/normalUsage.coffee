@@ -1,5 +1,7 @@
 require('../lib/little-popo')()
 
+wn = require 'when'
+
 describe "two"
 
 it "should equal 2", ->
@@ -15,5 +17,13 @@ it "is gonna throw error", ->
 it "should not throw error", ->
 
 	4.should.equal 4
+
+it "should produce an unhandled rejection", ->
+
+	wn().then ->
+
+		throw Error "a"
+
+	return
 
 # Array.join 654
