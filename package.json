@@ -1,6 +1,6 @@
 {
   "name": "little-popo",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "will be retired when popo reaches v0.1",
   "main": "scripts/js/lib/little-popo.js",
   "dependencies": {
@@ -9,7 +9,8 @@
     "chai-as-promised": "~3.3.1",
     "eyespect": "~0.1.8",
     "when": "~2.4.0",
-    "dom-converter": "~0.0.0"
+    "pretty-error": "~0.1",
+    "when-monitor": "~0.1"
   },
   "devDependencies": {
     "coffee-script": "~1.6.3"
