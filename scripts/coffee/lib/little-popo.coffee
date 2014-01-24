@@ -29,19 +29,7 @@ process.on 'exit', ->
 
 	console.log "\n\n"
 
-monitor = require 'when-monitor'
 
-unhandledRejectionRenderer = (rejection) ->
-
-	console.log rejection
-
-monitor 1, (rejections) ->
-
-	for r in rejections
-
-		unhandledRejectionRenderer r
-
-	return
 
 module.exports = (p, usePrettyError = yes) ->
 
@@ -64,3 +52,7 @@ module.exports = (p, usePrettyError = yes) ->
 		unhandledRejectionRenderer = (rejection) ->
 
 			errorReporter.render rejection, yes
+
+		prettyMonitor = require 'pretty-monitor'
+
+		prettyMonitor.start()
