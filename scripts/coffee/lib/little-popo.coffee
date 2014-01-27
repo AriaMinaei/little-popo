@@ -1,9 +1,6 @@
 path = require 'path'
 
 pathToLib = ''
-# pathToLib = path.resolve __dirname, '../../js/lib'
-
-
 
 global.mod = (p) ->
 
@@ -30,14 +27,11 @@ process.on 'exit', ->
 	console.log "\n\n"
 
 
-
 module.exports = (p, usePrettyError = yes) ->
 
 	pathToLib = p
 
 	if usePrettyError
-
-		# require 'when/monitor/console'
 
 		PrettyError = require 'pretty-error'
 
@@ -49,10 +43,25 @@ module.exports = (p, usePrettyError = yes) ->
 
 			errorReporter.render(error, yes)
 
-		unhandledRejectionRenderer = (rejection) ->
+		unixifiedPathToLib = pathToLib.replace /[\\]+/g, '/'
 
-			errorReporter.render rejection, yes
+		dirname = path.dirname(module.filename).replace /[\\]+/g, '/'
 
-		prettyMonitor = require 'pretty-monitor'
+		unixifiedPathToTests = path.dirname(module.parent.id).replace /[\\]+/g, '/'
 
-		prettyMonitor.start()
+		errorReporter
+		.skipNodeFiles()
+		.skipPackage('when', 'little-popo', 'chai')
+		.alias(unixifiedPathToLib, '(lib)')
+		.alias(unixifiedPathToTests, '(test)')
+		.skip (line) ->
+
+			if line?.dir? and line.dir is dirname
+
+				yes
+
+		require('pretty-monitor').start(100, errorReporter)
+
+		return errorReporter
+
+	return

@@ -4,7 +4,7 @@ wn = require 'when'
 
 describe "two"
 
-it "should equal 2", ->
+it "should equal 32", ->
 
 	2.should.equal 2
 
